@@ -26,6 +26,9 @@ dependencies:
   cloudinary:
     specifier: ^2.0.1
     version: 2.0.1
+  clsx:
+    specifier: ^2.1.0
+    version: 2.1.0
   lucide-react:
     specifier: ^0.341.0
     version: 0.341.0(react@18.2.0)
