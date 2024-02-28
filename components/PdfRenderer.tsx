@@ -14,11 +14,6 @@ import "react-pdf/dist/Page/TextLayer.css";
 
 import { useResizeDetector } from "react-resize-detector";
 
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/lib/utils";
-
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 type PdfRendererProps = {
@@ -28,42 +23,12 @@ type PdfRendererProps = {
 export default function PdfRenderer({ pdf }: PdfRendererProps) {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  //using react hook form to verify if the input from the navigator is valid
-  const CustomPageValidator = z.object({
-    page: z
-      .string()
-      .refine((num) => Number(num) >= 1 && Number(num) <= pdf?.pages!),
-  });
-
-  type TCustomPageValidator = z.infer<typeof CustomPageValidator>;
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<TCustomPageValidator>({
-    defaultValues: {
-      page: "1",
-    },
-    resolver: zodResolver(CustomPageValidator),
-  });
-  //
-
   const { width, ref } = useResizeDetector();
 
-  //going to the correct page when keydown Enter and if passed the validators
-  const handlePageSubmit = ({ page }: TCustomPageValidator) => {
-    setCurrentPage(Number(page));
-    setValue("page", String(page));
-  };
-
   return (
-    <div className="max-h-screen border-black border max-w-screen min-w-[40%] bg-white rounded-3xl rounded-b-none md:rounded-none border-b-transparent">
+    <div className=" border-black border min-w-[40%] bg-white rounded-3xl rounded-b-none md:rounded-none border-b-transparent">
       <div className="flex justify-between border  border-transparent border-b-zinc-400 p-2 items-center gap-1 px-3">
-        <h1 className="text-lg underline text-black">
-          {pdf?.name}
-        </h1>
+        <h1 className="text-lg underline text-black">{pdf?.name}</h1>
         <div className="flex items-center">
           <Button
             disabled={currentPage <= 1}
@@ -79,15 +44,14 @@ export default function PdfRenderer({ pdf }: PdfRendererProps) {
 
           <div className="flex items-center gap-1.5">
             <Input
-              {...register("page")}
-              className={cn(
-                "w-8 h-8",
-                errors.page && "focus-visible:ring-red-500"
-              )}
-              onKeyDown={(ev) => {
-                if (ev.key === "Enter") {
-                  handleSubmit(handlePageSubmit)();
-                }
+              value={currentPage}
+              className="w-8 h-8"
+              onChange={(ev) => {
+                if (
+                  Number(ev.target.value) > 0 &&
+                  Number(ev.target.value) <= pdf?.pages!
+                )
+                  setCurrentPage(Number(ev.target.value));
               }}
             />
             <p className="text-zinc-700 text-sm space-x-1">
