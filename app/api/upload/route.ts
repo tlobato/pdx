@@ -1,6 +1,10 @@
 import { CloudinaryFile } from "@/app/types";
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
+import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { pinecone } from "@/lib/pinecone";
+import { PineconeStore } from "@langchain/pinecone";
 
 cloudinary.config({
   cloud_name: "darjfiyou",
@@ -29,8 +33,35 @@ export async function POST(req: NextRequest) {
       })
       .catch((err) => reject(err));
   });
-  
+
   const { secure_url, pages, public_id } = uploadedFile as CloudinaryFile;
 
-  return new NextResponse(JSON.stringify({ name: file.name, secure_url, pages, public_id }), { status: 200 });
+  try {
+    //blobize the file (for pinecone vector db)
+    const res = await fetch(secure_url);
+    const blob = await res.blob();
+
+    const loader = new PDFLoader(blob);
+    const pageLevelDocs = await loader.load();
+    const pagesAmount = pageLevelDocs.length;
+
+    //vectorize and index the file
+    const pineconeIndex = pinecone.Index("pdx");
+
+    const embeddings = new OpenAIEmbeddings({
+      openAIApiKey: process.env.OPENAI_KEY,
+    });
+
+    await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
+      pineconeIndex,
+      namespace: public_id,
+    });
+  } catch (err) {
+    throw new Error("there was an error in the file upload");
+  }
+
+  return new NextResponse(
+    JSON.stringify({ name: file.name, secure_url, pages, public_id }),
+    { status: 200 }
+  );
 }

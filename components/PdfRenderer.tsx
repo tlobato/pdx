@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDownIcon, ChevronUpIcon, Loader2Icon } from "lucide-react";
-import { revalidatePath } from "next/cache";
+// import { revalidatePath } from "next/cache";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
 import { useState } from "react";
@@ -85,7 +85,7 @@ export default function PdfRenderer({ pdf }: PdfRendererProps) {
           }
           onLoadError={() => {
             toast.error("there was an error loading your file");
-            revalidatePath("/");
+            // revalidatePath("/");
           }}
           file={pdf?.secure_url}
           onLoadSuccess={() => {}}

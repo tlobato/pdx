@@ -24,7 +24,7 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body>
-          <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#c0c0c0_1px,transparent_1px),linear-gradient(to_bottom,#c0c0c0_1px,transparent_1px)] bg-[size:6rem_4rem]">
+          <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#dddddd_1px,transparent_1px),linear-gradient(to_bottom,#dddddd_1px,transparent_1px)] bg-[size:6rem_4rem]">
             <Toaster
               toastOptions={{
                 style: { background: "rgb(182, 24, 24)", color: "white" },

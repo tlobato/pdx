@@ -1,25 +1,12 @@
 "use client";
-import { useMutation } from "@tanstack/react-query";
+import { UseMutationResult, useMutation } from "@tanstack/react-query";
 import Dropzone, { DropzoneProps, useDropzone } from "react-dropzone";
-import axios from "axios";
-import { Dispatch, SetStateAction } from "react";
-import { Pdf } from "@/app/types";
 
 type DropZoneProps = {
-  setPdf: Dispatch<SetStateAction<Pdf | null>>;
+  uploadFile: UseMutationResult<void, Error, File, unknown>
 };
 
-export default function DropZone({ setPdf }: DropZoneProps) {
-  const uploadFile = useMutation({
-    mutationFn: async (file: File) => {
-      const formData = new FormData();
-      formData.append("pdf", file);
-      const res = (await axios.post("/api/upload", formData));
-      const pdf = await res.data as Pdf
-      setPdf(pdf);
-    },
-  });
-
+export default function DropZone({ uploadFile }: DropZoneProps) {
   return (
     <Dropzone onDrop={(acceptedFiles) => uploadFile.mutate(acceptedFiles[0])}>
       {({ getRootProps, getInputProps }) => (
