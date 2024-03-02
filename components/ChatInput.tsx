@@ -1,18 +1,16 @@
 import { UseMutationResult, useMutation } from "@tanstack/react-query";
 import { Button } from "./ui/Button";
 import { Textarea } from "./ui/Textarea";
-import axios from "axios";
 import { Dispatch, FormEvent, SetStateAction, useRef } from "react";
-import { message } from "./Chat";
 
 type ChatInputProps = {
   input: string
   setInput: Dispatch<SetStateAction<string>>
   handleAsk: (ev: FormEvent) => void
-  isPending: boolean
+  isLoading: boolean
 }
 
-export default function ChatInput({input, setInput, handleAsk, isPending}: ChatInputProps) {
+export default function ChatInput({input, setInput, handleAsk, isLoading}: ChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   return (
@@ -26,7 +24,7 @@ export default function ChatInput({input, setInput, handleAsk, isPending}: ChatI
           autoFocus
           ref={textareaRef}
           onKeyDown={(ev) => {
-            if (ev.key === 'enter' && !ev.shiftKey) {
+            if (ev.key === 'Enter' && !ev.shiftKey) {
               ev.preventDefault()
               handleAsk(ev)
               textareaRef.current?.focus()
@@ -39,7 +37,7 @@ export default function ChatInput({input, setInput, handleAsk, isPending}: ChatI
           type="submit"
           aria-label="send message"
           className="absolute bottom-3 right-4"
-          disabled={isPending || input === ''}
+          disabled={isLoading || input === ''}
           onClick={handleAsk}
         >
           Send

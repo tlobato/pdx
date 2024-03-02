@@ -6,9 +6,10 @@ import {openai} from '@/lib/openai'
 import { message } from "@/components/Chat";
 import {OpenAIStream, StreamingTextResponse} from 'ai'
 
+export const runtime = 'edge';
+
 export async function POST(req: NextRequest) {
   const { fileId, userMessage, formattedPrevMessages } = await req.json();
-  console.log(formattedPrevMessages)
   //vectorize user message
   const embeddings = new OpenAIEmbeddings({
     openAIApiKey: process.env.OPENAI_KEY,
@@ -26,7 +27,6 @@ export async function POST(req: NextRequest) {
   const response = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     temperature: 0,
-    stream: true,
     messages: [
         {
           role: 'system',
@@ -50,14 +50,12 @@ export async function POST(req: NextRequest) {
     CONTEXT:
     ${results.map((r) => r.pageContent).join('\n\n')}
     
-    USER INPUT: ${userMessage}`,
+    USER INPUT: ${userMessage.content}`,
         },
       ],
   })
 
-  const stream = OpenAIStream(response, {
-    async onCompletion (completion) {}
-  })
-
-  return new StreamingTextResponse(stream)
+  return new Response(JSON.stringify({
+    response: response.choices[0].message.content
+  }))
 }

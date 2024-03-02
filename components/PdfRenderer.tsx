@@ -26,10 +26,10 @@ export default function PdfRenderer({ pdf }: PdfRendererProps) {
   const { width, ref } = useResizeDetector();
 
   return (
-    <div className=" border-black border min-w-[40%] bg-white rounded-3xl rounded-b-none md:rounded-none border-b-transparent">
-      <div className="flex justify-between border  border-transparent border-b-zinc-400 p-2 items-center gap-1 px-3">
-        <h1 className="text-lg underline text-black">{pdf?.name}</h1>
-        <div className="flex items-center">
+    <div className="w-full lg:w-[36%] md:h-screen bg-white border border-r-black border-y-0 flex flex-col">
+      <div className="flex justify-between items-center gap-1 px-3 bg-orange-400 h-12">
+        <h1 className="md:text-lg underline text-black font-mono truncate">{pdf?.name}</h1>
+        <div className="flex items-center gap-1">
           <Button
             disabled={currentPage <= 1}
             size="icon"
@@ -45,7 +45,7 @@ export default function PdfRenderer({ pdf }: PdfRendererProps) {
           <div className="flex items-center gap-1.5">
             <Input
               value={currentPage}
-              className="w-8 h-8"
+              className="w-9 h-8"
               onChange={(ev) => {
                 if (
                   Number(ev.target.value) > 0 &&
@@ -68,7 +68,7 @@ export default function PdfRenderer({ pdf }: PdfRendererProps) {
             onClick={
               () =>
                 setCurrentPage((prev) =>
-                  prev + 1 < pdf?.pages! ? pdf?.pages! + 1 : pdf?.pages!
+                  prev + 1 < pdf?.pages! ? prev + 1 : pdf?.pages!
                 ) //validating to move to < lastpage pages
             }
           >
