@@ -13,5 +13,6 @@ Stack credits:
 
 Special mention for the react libraries that made this possible:
 - react-pdf
+- react-resize-detector
 - react-dropzone
 - lucide-react
