@@ -32,7 +32,7 @@ export default function Home() {
           <Chat fileId={pdf.public_id} />
         </main>
       ) : (
-        <main className="flex justify-center pt-40 flex-col">
+        <main className="flex justify-center pt-40 flex-col px-8 md:px-0">
           <h1 className="text-5xl text-center font-extrabold text-orange-500">
             <span className="text-6xl text-black">Chat with your PDFs </span>
             <br /> with just an upload
