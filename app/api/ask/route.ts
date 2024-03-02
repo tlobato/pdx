@@ -1,10 +1,9 @@
 import { pinecone } from "@/lib/pinecone";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { PineconeStore } from "@langchain/pinecone";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import {openai} from '@/lib/openai'
 import { message } from "@/components/Chat";
-import {OpenAIStream, StreamingTextResponse} from 'ai'
 
 export const runtime = 'edge';
 

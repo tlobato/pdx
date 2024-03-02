@@ -6,7 +6,6 @@ import { Pdf } from "./types";
 import PdfRenderer from "@/components/PdfRenderer";
 import Chat from "@/components/Chat";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { Loader2 } from "lucide-react";
 
 export default function Home() {
@@ -16,8 +15,11 @@ export default function Home() {
     mutationFn: async (file: File) => {
       const formData = new FormData();
       formData.append("pdf", file);
-      const res = await axios.post("/api/upload", formData);
-      const pdf = (await res.data) as Pdf;
+      const res = await fetch("/api/upload", {
+        method: 'POST',
+        body: formData
+      });
+      const pdf = (await res.json()) as Pdf;
       setPdf(pdf);
     },
   });
