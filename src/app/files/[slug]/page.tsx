@@ -82,18 +82,19 @@ export default function Page() {
   }, [slug])
 
   // Not using OpenAI!
-  // useEffect(() => {
-  //   const setupAI = async () => {
-  //     const key = Cookies.get("api-key");
-  //     if (key) initOpenAI(key);
-  //     if (pdfUrl) {
-  //       const pdfText = await extractTextFromPDF(pdfUrl);
-  //       processDocument(pdfText);
-  //     }
-  //   };
+  useEffect(() => {
+    const setupAI = async () => {
+      // const key = Cookies.get("api-key");
+      // if (key) initOpenAI(key);
+      if (pdfUrl) {
+        const pdfText = await extractTextFromPDF(pdfUrl);
+        // processDocument(pdfText);
+        console.log(pdfText)
+      }
+    };
 
-  //   setupAI();
-  // }, [pdfUrl]);
+    setupAI();
+  }, [pdfUrl]);
 
   if (!file || !pdfUrl)
     return (
