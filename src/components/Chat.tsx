@@ -1,4 +1,4 @@
-import { chatWithPDF } from "@/utils/ai"
+// import { chatWithPDF } from "@/utils/ai"
 import { useState } from "react"
 
 export default function Chat() {
@@ -12,10 +12,11 @@ export default function Chat() {
 
   const handleSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault()
+    console.log(input)
 
-    const res = await chatWithPDF(input, [])
-    if (res)
-      setMessages((prev) => [...prev, { content: res, role: "assistant" }])
+    // const res = await chatWithPDF(input, [])
+    // if (res)
+    //   setMessages((prev) => [...prev, { content: res, role: "assistant" }])
   }
 
   return (
