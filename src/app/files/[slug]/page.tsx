@@ -6,9 +6,7 @@ import { Loader2 } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { pdfjs } from "react-pdf"
-import Cookies from "js-cookie"
 import Chat from "@/components/Chat"
-import { PDFDocument } from "pdf-lib"
 
 // Set the worker source to the local file
 if (typeof window !== "undefined" && !pdfjs.GlobalWorkerOptions.workerSrc) {
