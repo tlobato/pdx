@@ -18,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchFiles()
-    const savedApiKey = Cookies.get("openai-api-key")
+    const savedApiKey = Cookies.get("api-key")
     if (savedApiKey && apiKeyInputRef.current) {
       apiKeyInputRef.current.value = savedApiKey
     }
@@ -54,7 +54,7 @@ export default function Home() {
   const handleSaveKey = () => {
     const apiKey = apiKeyInputRef.current?.value
     if (apiKey) {
-      Cookies.set("openai-api-key", apiKey, { expires: 30 })
+      Cookies.set("api-key", apiKey)
       alert("API key saved successfully!")
     }
   }
@@ -71,7 +71,7 @@ export default function Home() {
             htmlFor="apikey"
             className="flex items-center gap-1 text-xs font-bold py-1"
           >
-            <span>OPENAI API KEY</span>
+            <span>DEEPSEEK API KEY</span>
             <Link href="/get-key">
               <InfoIcon size={18} />
             </Link>

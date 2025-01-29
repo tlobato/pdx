@@ -1,7 +1,6 @@
 "use client"
 
 import Doc from "@/components/Doc"
-import { initOpenAI, processDocument } from "@/utils/ai"
 import { addThumbnail, FileData, getFile } from "@/utils/db"
 import { Loader2 } from "lucide-react"
 import { useParams } from "next/navigation"
@@ -84,19 +83,19 @@ export default function Page() {
     fetchFile()
   }, [slug])
 
-  //setup AI
-  useEffect(() => {
-    const setupAI = async () => {
-      const key = Cookies.get("openai-api-key");
-      if (key) initOpenAI(key);
-      if (pdfUrl) {
-        const pdfText = await extractTextFromPDF(pdfUrl);
-        processDocument(pdfText);
-      }
-    };
+  // Not using OpenAI!
+  // useEffect(() => {
+  //   const setupAI = async () => {
+  //     const key = Cookies.get("api-key");
+  //     if (key) initOpenAI(key);
+  //     if (pdfUrl) {
+  //       const pdfText = await extractTextFromPDF(pdfUrl);
+  //       processDocument(pdfText);
+  //     }
+  //   };
 
-    setupAI();
-  }, [pdfUrl]);
+  //   setupAI();
+  // }, [pdfUrl]);
 
   if (!file || !pdfUrl)
     return (

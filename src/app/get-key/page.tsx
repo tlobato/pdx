@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     <main className="max-w-3xl mx-auto pt-8">
-      <h1 className="text-4xl py-4 font-bold">
+      {/* <h1 className="text-4xl py-4 font-bold">
         How to get your OpenAI API Key
       </h1>
       <p className="text-xl">
@@ -30,7 +30,8 @@ export default function Page() {
       <a href="https://github.com/tlobato/pdx" className="underline">
         {" "}
         Our Github Repository
-      </a>
+      </a> */}
+      <h1>We're waiting for Deepseek API to be available...</h1>
     </main>
   );
 }
