@@ -12,7 +12,7 @@ export default function Chat() {
 
   const handleSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault()
-    console.log(input)
+    setMessages((prev) => [...prev, { content: input, role: "user" }])
 
     // const res = await chatWithPDF(input, [])
     // if (res)
